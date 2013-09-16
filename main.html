@@ -1,0 +1,146 @@
+<!doctype html>
+<html>
+
+    <head>
+
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+    </head>
+
+    <body>
+
+    	<h1>Tic Tac Toe</h1>
+
+        <table border="1" id="table1" style='table-layout:fixed'>
+
+            <tr>
+                <td id='1,1'></td>
+                <td id='1,2'></td>
+                <td id='1,3'></td>
+            </tr>
+            <tr>
+                <td id='2,1'></td>
+                <td id='2,2'></td>
+                <td id='2,3'></td>
+            </tr>
+            <tr>
+                <td id='3,1'></td>
+                <td id='3,2'></td>
+                <td id='3,3'></td>
+            </tr>
+
+        </table>
+
+        <script>
+
+        /*Setting up the table*/
+
+            var counter = 1;
+
+            var tableHeight = 300;
+            var tableWidth = 300;
+
+            player1 = new Array();
+            player2 = new Array();
+
+            //$('#table1').attr('width', '100%').attr('height', '100%');
+
+            $('#table1').attr('width', tableHeight).attr('height', tableWidth);
+                
+            $('td').each(function(){
+
+                $(this).text(" ").attr('width',tableWidth/3).attr('height',tableHeight/3);
+                counter ++;
+
+            });
+
+            /*for(i=0;i<3;i++)
+
+                $('<col width=10px/>').appendTo('#table1');
+*/
+            //$('#table1').attr('style', 'table-layout:fixed');
+
+            toggle = 'X'
+
+            $('td').click(function(){
+
+                /*Add the symbol of the current player*/
+
+                $(this).text(toggle);
+
+                $(this).attr('style','text-align:center;');
+
+                if(toggle == 'X')
+                {
+
+                    toggle = 'O';
+
+                    f = $(this);
+                    
+                    var g = $(this).get(0).id.split(',');
+
+                    for(i in g)
+
+                        g[i] = parseInt(g[i]);
+
+                    player1.push(g);
+
+                }
+
+                else
+                {
+
+                    toggle = 'X';
+
+                    f = $(this);
+                    
+                    var g = $(this).get(0).id.split(',');
+
+                    for(i in g)
+
+                        g[i] = parseInt(g[i]);
+
+                    player2.push(g);
+
+                }
+
+                h = checkIfWon();
+
+                if(h == 1)
+                {
+
+                    alert("Player 1 won the game");
+                    gameOver();
+
+                }
+
+
+                if(h == 2)
+
+                {
+
+                    alert("Player 2 won the game");
+                    gameOver();
+
+                }
+
+            });
+
+
+            function gameOver(){
+
+                return true;
+
+            }
+
+
+            function checkIfWon(){
+                console.log("Player 1 has: " + player1);
+                console.log("Player 2 has: " + player2);
+            }
+
+        </script>
+
+    </body>
+
+</html>
