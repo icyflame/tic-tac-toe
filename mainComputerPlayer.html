@@ -42,6 +42,16 @@
 
         <script>
 
+            allCells = new Array();
+
+            for(i = 1; i <=3; i++)
+
+                for(j = 1; j <= 3; j++)
+
+                    allCells.push([i, j]);
+
+            emptyCells = new Array();
+
             function initialise(){
 
                 toggle = 'X';
@@ -61,20 +71,18 @@
                     var tableHeight = 300;
                     var tableWidth = 300;
 
+                    emptyCells = allCells;
+
                     player1 = new Array();
                     player2 = new Array();
 
                     $('#table1').attr('width', tableWidth).attr('height', tableHeight);
-                        
-                    $('td').each(function(){
 
-                        $(this).text(" ").attr('width',tableWidth/3).attr('height',tableHeight/3);
+                    $("td").text(" ").attr('width',tableWidth/3).attr('height',tableHeight/3);
+
+                    $("td").attr("style", "text-align:center")
     
-                    });  
-
                     $("h2").text("Player 1 to play.")
-
-                    toggle = 'X';
 
             };
 
@@ -86,47 +94,56 @@
 
                 x = 0;
 
-                $(this).text(toggle);
+                $(this).text('X');
 
-                $(this).attr('style','text-align:center;');
+                var g = $(this).get(0).id.split(',');
 
-                if(toggle == 'X')
-                {
+                for(i in g)
 
-                    toggle = 'O';
+                    g[i] = parseInt(g[i]);
 
-                    x = 2;
+                player1.push(g);
 
-                    f = $(this);
-                    
-                    var g = $(this).get(0).id.split(',');
+                //This cell is no longer empty. So we need to remove it from 
+                //the empty cell array.
 
-                    for(i in g)
+                temp = new Array();
 
-                        g[i] = parseInt(g[i]);
+                //alert(g);
 
-                    player1.push(g);
+                //alert(typeof(g));
 
-                }
+                for(i=0; i<emptyCells.length; ++i)
 
-                else
-                {
+                    if(!((emptyCells[i][0] == g[0]) && (emptyCells[i][1] == g[1])))
 
-                    toggle = 'X';
+                        temp.push(emptyCells[i]);
 
-                    f = $(this);
+                emptyCells = temp;
 
-                    x = 1;
-                    
-                    var g = $(this).get(0).id.split(',');
+                //AlertArray(temp);
 
-                    for(i in g)
+                //alert(g + " removed");
 
-                        g[i] = parseInt(g[i]);
+                //document.write("emtpyCells: <br>" + emptyCells)
 
-                    player2.push(g);
+                var t = ComputerPlayerDecide();
 
-                }
+                //t is an array where we need to fill the 'O'
+
+                player2.push(t);
+
+                //Aesthetics! We need to fill it on the screen also.
+
+                var y;
+
+                y = t[0] + "," + t[1];;
+                
+                for(i = 0; i < $("td").length; ++i)
+
+                    if($("td").get(i).id == y)
+
+                        $("td").get(i).innerHTML = "O";
 
                 h = checkIfWon();
 
@@ -156,9 +173,23 @@
 
                 }
 
-                $('h2').text("Player " + x + " to play.")
+                $('h2').text("Player 1 to play.");;
 
             });
+
+            function ComputerPlayerDecide(){
+
+                if(emptyCells.length == 8)
+
+                    return emptyCells[0];
+
+                else
+
+                    alert("I am unable to decide!");
+
+                return [3, 3]
+
+            }
 
 
             function gameOver(){
@@ -424,10 +455,27 @@
                 **************************************************/
 
                 
-            }
+            };;
+
+
+
+        function AlertArray(f)
+        {
+            s = "";
+            for(i in f)
+
+                s += f[i] + "\n";
+
+            alert(s);
+        }
 
         </script>
 
     </body>
 
 </html>
+
+<script>
+
+
+</script>
